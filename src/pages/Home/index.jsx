@@ -1,13 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // import './index.css';
-//import { Button, Label} from 'storybook-project/dist'
+import { Button, Label} from 'storybook-project/dist'
+import { Navigation, Header, Footer, Main, Card} from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist'
+import NavigationMenu from '../../components/NavigationMenu';
 import { connect } from 'react-redux';
 import styles from './index.css';
 import { increase } from './action'
 
-class Home extends React.Component {
+//import beers from '../../../src/beers.json'
 
+const beers = require('../App/db/beers');
+
+class Home extends React.Component {
 
   constructor(props){
     super(props);
@@ -15,28 +20,35 @@ class Home extends React.Component {
     this.printA = this.printA.bind(this);
   }
 
-
   printA(event){
     Console.log("hi");
   }
 
   render() {
+    const cards = beers.map(beer =>
+      <Card
+        imgUrl={beer.image_url}
+        name={beer.name}
+        tagline={beer.tagline}>
+      </Card>);
     return (
       <div className="home">
-        <h1> Hello World! </h1>
+        <Header>
+          <h1>
+            Duff Brewery
+          </h1>
+        </Header>
 
-        <span>{this.props.number}</span>
+        <NavigationMenu active="1"/>
+
+        <Main>{cards}</Main>
+
+        {/* <span>{this.props.number}</span>
         <button onClick={this.props.increase1}>+1</button>
-        <button onClick={this.props.increase100}>+100</button>
-        <h4>Links:</h4>
-        <div className={styles.customHome} >
-          <Link href="a" to="/somethingNotFound"> Go to Not Found page! </Link>
-          
-        </div>
-        <div className={styles.customHome} >
-          <Link href="a" to="/about"> Go to About page! </Link>
-          
-        </div>
+        <button onClick={this.props.increase100}>+100</button> */}
+
+        {/* <Button text='Press me!'></Button> */}
+
       </div>
     );
   }
