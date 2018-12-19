@@ -1,6 +1,5 @@
 import React from 'react';
-//import { Navigation } from 'storybook-project/dist';
-import { Navigation } from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist';
+import { Navigation } from 'storybook-project/dist';
 import PropTypes from 'prop-types';
 
 export default class NavigationMenu extends React.Component {
