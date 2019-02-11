@@ -1,7 +1,7 @@
-export const homeReducer = (state = {number:0, beers: [], cardevents: []}, action) => {
+export const homeReducer = (state = {beers: [], cardevents: []}, action) => {
     switch(action.type){
-        case 'INCREASE':
-            return Object.assign({}, state, { number: state.number + action.value });
+        // case 'INCREASE':
+        //     return Object.assign({}, state, { number: state.number + action.value });
         case 'BEERS':
             return Object.assign({}, state, { beers: action.value });
         case 'SET-CARD':
@@ -14,7 +14,6 @@ export const homeReducer = (state = {number:0, beers: [], cardevents: []}, actio
 };
 
 
-// const obj = {
-//     ime: 'David'
-// };
+
+
 

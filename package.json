@@ -51,6 +51,7 @@
     "react-router-redux": "^4.0.8",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "storybook-project": "github:chenchi13/storybook-boilerplate"
+    "storybook-project": "github:chenchi13/storybook-boilerplate",
+    "url-loader": "^1.1.2"
   }
 }
