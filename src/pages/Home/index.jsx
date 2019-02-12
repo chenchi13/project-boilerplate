@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-//import { Button, Navigation, Header, Main, Card} from 'storybook-project/dist'
+//import { Navigation, Header, Main, Card} from 'storybook-project/dist'
 import { Navigation, Header, Main, Card} from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist'
 import NavigationMenu from '../../components/NavigationMenu';
 import FooterComponent from '../../components/Footer';
+import ModalComponent from '../../components/Modal';
+
 import { connect } from 'react-redux';
 import styles from './index.css';
-import { increase, setCardEvents, setCards } from './action'
+import { addToFavorites, addToCart, showBeerDetails, hideBeerDetails } from './action'
 
 const beers = require('../App/db/beers');
 
@@ -17,22 +19,32 @@ class Home extends React.Component {
 
     this.addToCart = this.addToCart.bind(this);
     this.addToFavorites = this.addToFavorites.bind(this);
+    this.showBeerDetails = this.showBeerDetails.bind(this);
+    this.hideBeerDetails = this.hideBeerDetails.bind(this); 
+  }
+
+  showBeerDetails(beer) {
+    this.props.showBeerDetails(beer);
+  }
+
+  hideBeerDetails() {
+    this.props.hideBeerDetails();
   }
 
   addToFavorites(id) {
-    const objCard = {
+    const objBeer = {
       id: id,
       type: 'FAVORITES'
     };
-    this.props.setCardEvents(objCard);
+    this.props.addToFavorites(objBeer);
   }
 
   addToCart(id) {
-    const objCard = {
+    const objBeer = {
       id: id,
       type: 'CART'
     };
-    this.props.setCardEvents(objCard);
+    this.props.addToCart(objBeer);
   }
 
   render() {
@@ -43,14 +55,27 @@ class Home extends React.Component {
         tagline={beer.tagline}
         onClickFavorites={() =>{this.addToFavorites(beer.id)}}
         onClickCart={() =>{this.addToCart(beer.id)}}
+        onClickDetails={() => this.showBeerDetails(beer)}
         iconFavorites="/icons/star-empty.png"
         iconFavorites= { 
-          this.props.cardevents
-          .filter(e => e.id == beer.id && e.type == 'FAVORITES')
+          this.props.favorites
+          .filter(e => e.id == beer.id 
+            && e.type == 'FAVORITES')
           .length > 0 === true ? "/icons/star-full.png" : "/icons/star-empty.png"
         }
+        iconCart="/icons/cart.png"
+        iconDetails="/icons/info.png"
         >
       </Card>);
+
+    const beerDetails = this.props.beerDetails;
+    const modal = Object.keys(beerDetails).length !== 0 ?
+      (<ModalComponent beerDetails={beerDetails}
+        onClose={this.hideBeerDetails}
+        addCart={this.addToCart}
+        addFavorites={this.addToFavorites}/>)
+      : undefined;
+
     return (
       <div className={styles.home}>
         <div className={styles.header}>
@@ -63,20 +88,25 @@ class Home extends React.Component {
         <div className={styles.sidebar}>
           <FooterComponent/>
         </div>
+        <div className={styles.popup}>
+              {modal}
+            </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  number: state.home.number,
-  cardevents: state.home.cardevents,
-  beers: state.home.beers
+  favorites: state.home.favorites,
+  cart: state.home.cart,
+  beerDetails: state.home.beerDetails
 });
 
 const mapDispatchProps = dispatch => ({
-  setCards: beers => dispatch(setCards(beers)),
-  setCardEvents: (objCard) => dispatch(setCardEvents(objCard)),
+  addToFavorites: (objBeer) => dispatch(addToFavorites(objBeer)),
+  addToCart: (objBeer) => dispatch(addToCart(objBeer)),
+  showBeerDetails: beer => dispatch(showBeerDetails(beer)),
+  hideBeerDetails: () => dispatch(hideBeerDetails())
 });
 
 export default connect(

@@ -1,6 +1,6 @@
 import React from 'react';
-//import { Footer, Icon } from 'storybook-project/dist';
-import { Footer, Icon } from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist'
+import { Footer, Icon } from 'storybook-project/dist';
+//import { Footer, Icon } from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist'
 import PropTypes from 'prop-types';
 
 export default class FooterComponent extends React.Component {

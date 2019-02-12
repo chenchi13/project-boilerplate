@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import './index.css';
-//import { Button, Label} from 'storybook-project/dist'
-import { Navigation, Header, Main, Card } from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist'
+import { Navigation, Header, Main, Card} from 'storybook-project/dist'
+//import { Navigation, Header, Main, Card } from 'C:/Users/oluji/Desktop/git-clone/storybook-boilerplate/dist'
 import NavigationMenu from '../../components/NavigationMenu';
 import FooterComponent from '../../components/Footer';
 import styles from './index.css';
 
 import { connect } from 'react-redux';
-import { setCards, setCardEvents } from '../Home/action';
+import { addToFavorites, addToCart } from '../Home/action'
+
 
 const beers = require('../App/db/beers');
 
@@ -19,23 +19,15 @@ class Favorites extends React.Component {
 
     this.addToCart = this.addToCart.bind(this);
     this.addToFavorites = this.addToFavorites.bind(this);
-    // this.removePopupBeer = this.removePopupBeer.bind(this);
-    // this.setPopupBeer = this.setPopupBeer.bind(this);
   }
 
-  // setPopupBeer(beer) {
-  //   this.props.showPopupBeer(beer);
-  // }
-  // removePopupBeer() {
-  //   this.props.removePopupBeer();
-  // }
 
   addToFavorites(id) {
-    const objCard = {
+    const objBeer = {
       id: id,
       type: 'FAVORITES'
     };
-    this.props.setCardEvents(objCard);
+    this.props.addToFavorites(objBeer);
   }
 
   addToCart(id) {
@@ -43,13 +35,13 @@ class Favorites extends React.Component {
       id: id,
       type: 'CART'
     };
-    this.props.setCardEvents(objCard);
+    this.props.addToCart(objCard);
   }
 
   render() {
-    let cardevents = this.props.cardevents;
-    const beersForDisplay = beers.filter((beer_el) => { 
-      return cardevents.filter(function(cardevents_el){ return cardevents_el.id == beer_el.id; }).length > 0
+    let favorites = this.props.favorites;
+    const beersForDisplay = beers.filter((beer) => { 
+      return favorites.filter(function(favorite){ return favorite.id == beer.id; }).length > 0
     });
 
     const cards = beersForDisplay.map(beer =>
@@ -61,7 +53,7 @@ class Favorites extends React.Component {
         onClickCart={() =>{this.addToCart(beer.id)}}
         iconFavorites="/icons/star-empty.png"
         iconFavorites= { 
-          this.props.cardevents
+          this.props.favorites
           .filter(e => e.id == beer.id && e.type == 'FAVORITES')
           .length > 0 === true ? "/icons/star-full.png" : "/icons/star-empty.png"}
           >
@@ -84,13 +76,13 @@ class Favorites extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  cardevents: state.home.cardevents,
-  beers: state.home.beers
+  favorites: state.home.favorites,
+  cart: state.home.cart
 });
 
 const mapDispatchProps = dispatch => ({
-  setCards: beers => dispatch(setCards(beers)),
-  setCardEvents: (objCard) => dispatch(setCardEvents(objCard)),
+  addToFavorites: (objBeer) => dispatch(addToFavorites(objBeer)),
+  addToCart: (objBeer) => dispatch(addToCart(objBeer)),
 });
 
 export default connect(

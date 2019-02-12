@@ -1,0 +1,35 @@
+.imageN
+{ 
+    max-width: 200px;
+    max-height: 200px;
+    padding: 5px;
+    padding-left: 45px;
+    padding-top: 25px!important;
+}
+
+.maincontent
+{
+    float: right;
+    max-width: 70%;
+} 
+
+.clear_float
+{
+    clear: both;
+}
+
+.buttonGroup
+{
+    margin: auto;
+    text-align: center;
+    position: fixed;
+    bottom: 400px;
+} 
+
+.button{
+    margin: 10px;
+}
+
+.popup{
+    width: 600px;
+} 
